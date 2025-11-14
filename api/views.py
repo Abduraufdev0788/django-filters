@@ -38,6 +38,12 @@ def add_user_view(request: HttpRequest):
         if gender:
             users = Users.objects.filter(gender = gender)
 
+    if request.method == "GET":
+        params = request.GET
+        rating = params.get("rating")
+        if rating:
+            users = Users.objects.filter(rating = rating)
+
 
 
         result = []
@@ -45,6 +51,8 @@ def add_user_view(request: HttpRequest):
             result.append(to_json(user))
 
         return JsonResponse(data={"count": len(result), "result": result}, status = 201)
+    
+
 
 
 
